@@ -23,6 +23,7 @@ Card* Deck::pick()
 
 void Deck::reset()
 {
+    this->clear();
     Card* newCard;
     int suits = 4, cards = 13;
     for(int i = 0; i < suits; i++)

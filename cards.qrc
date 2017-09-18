@@ -53,5 +53,6 @@
         <file>images/td.png</file>
         <file>images/th.png</file>
         <file>images/ts.png</file>
+        <file>images/background.jpg</file>
     </qresource>
 </RCC>

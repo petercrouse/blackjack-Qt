@@ -27,7 +27,7 @@ BlackJack::BlackJack(QWidget *parent) :
     ui->playerLayout->addWidget(playerView);
     ui->dealerLayout->addWidget(dealerView);
 
-    QObject::connect(dealer, SIGNAL(handChanged()), dealerView, SLOT(rescanHand()));
+    QObject::connect(actionGroup, SIGNAL(triggered(QAction*)), this, SLOT(actionEvent(QAction*)));
 
 }
 
@@ -38,15 +38,22 @@ BlackJack::~BlackJack()
 
 void BlackJack::deal(){
     *player << deck.pick();
-    qDebug() << player->findChildren<Card*>();
     *player << deck.pick();
-    qDebug() << player->findChildren<Card*>();
+    ui->spinBoxCardLeft->setValue(deck.length());
 }
 
 void BlackJack::actionEvent(QAction *event){
     QString name = event->objectName();
+    qDebug() << name;
     if(name == "action_Hit_ME"){
         *player << deck.pick();
+        ui->spinBoxCardLeft->setValue(deck.length());
+    }
+    if(name == "action_New_Game"){
+        deck.reset();
+        while ( Card* c = player->findChild<Card*>())
+            delete c;
+        deal();
     }
 
 }
