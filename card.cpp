@@ -4,9 +4,14 @@
 QStringList Card::sFaces = {"a", "2", "3", "4", "5", "6", "7", "8", "9", "t", "j", "q", "k"};
 QStringList Card::sSuits = {"c", "s", "h", "d"};
 
-Card::Card(QString name): m_label(new QLabel()), m_name(name)
+Card::Card(QString name, QObject *parent): QObject(parent), m_label(new QLabel()), m_name(name)
 {
+    QPixmap pix(QString(":/images/%1.png").arg(name));
+    m_label->setPixmap(pix);
+}
 
+Card::~Card(){
+    delete m_label;
 }
 
 const QString& Card::name()

@@ -12,7 +12,8 @@ private:
     QLabel* m_label;
     QString m_name;
 public:
-    Card(QString name);
+    Card(QString name, QObject *parent = 0);
+    ~Card();
     const QString& name();
     QLabel* label() const;
     int value() const;

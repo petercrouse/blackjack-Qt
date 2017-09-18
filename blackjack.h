@@ -5,6 +5,8 @@
 #include "handview.h"
 #include <QMainWindow>
 
+class QActionGroup;
+
 namespace Ui {
 class BlackJack;
 }
@@ -15,17 +17,19 @@ class BlackJack : public QMainWindow
 public:
     explicit BlackJack(QWidget *parent = 0);
     ~BlackJack();
-    void loadSettings();
-//    void closeEvent(QCloseEvent *event);
-    void deal();
+    void loadSettings();   
+    void deal();    
+private slots:
     void actionEvent(QAction *event);
+    void closeEvent(QCloseEvent *event);    
 private:
     Ui::BlackJack *ui;
-    Deck* deck;
-    Hand* player;
-    Hand* dealer;
+    Deck deck;
+    Hand *player;
+    Hand *dealer;
     HandView* playerView;
     HandView* dealerView;
+    QActionGroup* actionGroup;
 };
 
 #endif // BLACKJACK_H

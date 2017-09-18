@@ -1,17 +1,13 @@
 #include "hand.h"
-#include "card.h"
+#include <QDebug>
 
-Hand::Hand(QString name, QObject* parent): QObject(parent)
+Hand::Hand(QObject *parent): QObject(parent)
 {
-    setObjectName(name);
-}
-
-Hand::~Hand(){
 
 }
 
 Hand& Hand::operator <<(Card* card){
     card->setParent(this);
-    emit handChanged(this);
+    emit handChanged();
     return *this;
 }

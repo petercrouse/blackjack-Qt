@@ -3,13 +3,13 @@
 #include "card.h"
 #include <QTextStream>
 #include <QDate>
+#include <QObject>
 
-class Deck: public QObject
+class Deck: public QList<Card*>
 {
-    Q_OBJECT
 public:
-    explicit Deck(QObject* parent = 0);
-    virtual ~Deck();
+    Deck();
+    ~Deck();
     void Shuffle();
     void reset();
     Card* pick();
