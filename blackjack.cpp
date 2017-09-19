@@ -5,6 +5,7 @@
 #include <QActionGroup>
 #include <QCloseEvent>
 #include <QDebug>
+#include <QToolBar>
 
 BlackJack::BlackJack(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::BlackJack),
@@ -13,7 +14,7 @@ BlackJack::BlackJack(QWidget *parent) :
     dealerView(new HandView(dealer, this)),
     actionGroup(new QActionGroup(this))
 {
-    ui->setupUi(this);
+    ui->setupUi(this);    
 
     actionGroup->addAction(ui->action_Deal_Hand);
     actionGroup->addAction(ui->action_Hit_ME);
@@ -21,6 +22,10 @@ BlackJack::BlackJack(QWidget *parent) :
     actionGroup->addAction(ui->action_Quit);
     actionGroup->addAction(ui->action_Shuffle_Deck);
     actionGroup->addAction(ui->action_Stay);
+
+    QToolBar* toolbar = new QToolBar("Choice ToolBar", this);
+    toolbar->addActions(actionGroup->actions());
+    this->addToolBar(Qt::RightToolBarArea, toolbar);
 
     deal();
 
