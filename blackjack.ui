@@ -171,7 +171,6 @@ background-color: transparent;</string>
     </property>
     <addaction name="action_New_Game"/>
     <addaction name="action_Deal_Hand"/>
-    <addaction name="action_Shuffle_Deck"/>
     <addaction name="action_Hit_ME"/>
     <addaction name="action_Stay"/>
     <addaction name="action_Quit"/>
@@ -187,11 +186,6 @@ background-color: transparent;</string>
   <action name="action_Deal_Hand">
    <property name="text">
     <string>&amp;Deal Hand</string>
-   </property>
-  </action>
-  <action name="action_Shuffle_Deck">
-   <property name="text">
-    <string>&amp;Shuffle Deck</string>
    </property>
   </action>
   <action name="action_Hit_ME">
