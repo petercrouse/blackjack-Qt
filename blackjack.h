@@ -30,6 +30,9 @@ private:
     HandView* playerView;
     HandView* dealerView;
     QActionGroup* actionGroup;
+    int handScore(Hand* hand);
+    int pScore;
+    int dScore;
 };
 
 #endif // BLACKJACK_H

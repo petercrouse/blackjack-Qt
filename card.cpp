@@ -28,12 +28,15 @@ int Card::value() const
 {
     QChar card = m_name.at(0);
     char c = card.toLatin1();
+
     int value;
 
     if (c == 't' || c == 'j' || c == 'q' || c == 'k')
         value = 10;
+    else if(c == 'a')
+        value = 1;
     else
-        value = static_cast<int> (c);
+        value = QChar::digitValue(c);
     return value;
 }
 
