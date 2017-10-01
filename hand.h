@@ -12,6 +12,8 @@ class Hand: public QObject
 public:
     explicit Hand(QObject* parent = 0);
     Hand& operator <<(Card* card);
+    int handValue() const;
+    void clearHand();
 signals:
     void handChanged();
 };

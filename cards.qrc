@@ -36,6 +36,7 @@
         <file>images/ad.png</file>
         <file>images/ah.png</file>
         <file>images/as.png</file>
+        <file>images/background.jpg</file>
         <file>images/cb.png</file>
         <file>images/jc.png</file>
         <file>images/jd.png</file>
@@ -53,6 +54,5 @@
         <file>images/td.png</file>
         <file>images/th.png</file>
         <file>images/ts.png</file>
-        <file>images/background.jpg</file>
     </qresource>
 </RCC>

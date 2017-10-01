@@ -30,7 +30,7 @@ private:
     HandView* playerView;
     HandView* dealerView;
     QActionGroup* actionGroup;
-    int handScore(Hand* hand);
+    void drawCard(Card* card, QString name);
     int pScore;
     int dScore;
 };

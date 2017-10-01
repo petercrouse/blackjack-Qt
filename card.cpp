@@ -6,8 +6,7 @@ QStringList Card::sSuits = {"c", "s", "h", "d"};
 
 Card::Card(QString name, QObject *parent): QObject(parent), m_label(new QLabel()), m_name(name)
 {
-    QPixmap pix(QString(":/images/%1.png").arg(name));
-    m_label->setPixmap(pix);
+
 }
 
 Card::~Card(){

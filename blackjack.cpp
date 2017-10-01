@@ -44,40 +44,58 @@ BlackJack::~BlackJack()
 }
 
 void BlackJack::deal(){
-    *player << deck.pick();
-    *player << deck.pick();
+    for(int i = 0; i < 2; i++){
+        Card* card = deck.pick();
+        drawCard(card, card->name());
+        *player << card;
+    }
+    for(int i = 0; i < 2; i++){
+        Card* card = deck.pick();
+        drawCard(card, "cb");
+        *dealer << card;
+    }
     ui->spinBoxCardLeft->setValue(deck.length());
 }
 
 void BlackJack::actionEvent(QAction *event){
     QString name = event->objectName();
-    qDebug() << name;
 
     if(name == "action_Hit_ME"){
         int playerScore;
-        *player << deck.pick();
-        playerScore = handScore(player);
+        Card* card = deck.pick();
+        drawCard(card, card->name());
+        *player << card;
+        playerScore = player->handValue();
 
         if(playerScore > 21){
             QMessageBox::information(this, "BlackJack", "BUSTED! You lose.");
             ui->action_Hit_ME->setEnabled(false);
             ui->action_Stay->setEnabled(false);
-            if(deck.length() < 10)
-                ui->action_Deal_Hand->setEnabled(false);
-            else
-                ui->action_Deal_Hand->setEnabled(true);
             dScore++;
-            ui->labelScore->setText(QString("%1:%2").arg(dScore).arg(pScore));
         }
+
+        if(playerScore <= 21 && player->findChildren<Card*>().length() >= 5){
+            QMessageBox::information(this, "BlackJack", "Player wins!");
+            ui->action_Deal_Hand->setEnabled(true);
+            ui->action_Hit_ME->setEnabled(false);
+            ui->action_Stay->setEnabled(false);
+            pScore++;
+
+        }
+
+        if(deck.length() < 10)
+            ui->action_Deal_Hand->setEnabled(false);
+        else
+            ui->action_Deal_Hand->setEnabled(true);
+
+        ui->labelScore->setText(QString("%1:%2").arg(dScore).arg(pScore));
         ui->spinBoxCardLeft->setValue(deck.length());
     }
 
     if(name == "action_New_Game"){
         deck.reset();
-        while ( Card* p = player->findChild<Card*>())
-            delete p;
-        while ( Card* d = dealer->findChild<Card*>())
-            delete d;
+        player->clearHand();
+        dealer->clearHand();
         ui->action_Deal_Hand->setEnabled(true);
         ui->spinBoxCardLeft->setValue(deck.length());
         ui->labelDealerScore->setText("");
@@ -88,27 +106,30 @@ void BlackJack::actionEvent(QAction *event){
     }
 
     if(name == "action_Deal_Hand"){
-        while ( Card* p = player->findChild<Card*>())
-            delete p;
-        while ( Card* d = dealer->findChild<Card*>())
-            delete d;
+        player->clearHand();
+        dealer->clearHand();
         ui->labelDealerScore->setText("");
         ui->labelPlayerScore->setText("");
         deal();
         ui->action_Deal_Hand->setEnabled(false);
-        ui->action_Shuffle_Deck->setEnabled(false);
         ui->action_Hit_ME->setEnabled(true);
         ui->action_Stay->setEnabled(true);
     }
 
     if(name == "action_Stay"){
-        int playerScore = handScore(player);
-        int dealerScore = 0;
+        int playerScore = player->handValue();
+        int dealerScore = dealer->handValue();
+
+        //changes cardback image of dealer to cardface
+        QList<Card*> cards = dealer->findChildren<Card*>();
+        for(int i = 0; i < cards.length(); i++)
+            drawCard(cards.at(i), cards.at(i)->name());
 
         while(dealerScore < 18){
             Card* card = deck.pick();
+            drawCard(card, card->name());
             *dealer << card;
-            dealerScore = handScore(dealer);
+            dealerScore = dealer->handValue();
             ui->spinBoxCardLeft->setValue(deck.length());
         }
 
@@ -120,11 +141,12 @@ void BlackJack::actionEvent(QAction *event){
             dScore++;
         else
             pScore++;
-        ui->labelScore->setText(QString("%1:%2").arg(dScore).arg(pScore));
 
+        ui->labelScore->setText(QString("%1:%2").arg(dScore).arg(pScore));
         ui->action_Stay->setEnabled(false);
         ui->action_Hit_ME->setEnabled(false);
         ui->action_Shuffle_Deck->setEnabled(true);
+
         if(deck.length() < 10)
             ui->action_Deal_Hand->setEnabled(false);
         else
@@ -140,23 +162,16 @@ void BlackJack::actionEvent(QAction *event){
         ui->action_Deal_Hand->setEnabled(true);
         ui->spinBoxCardLeft->setValue(deck.length());
     }
+
+    if(name == "action_Quit")
+        QApplication::exit();
 }
 
 void BlackJack::closeEvent(QCloseEvent *event){
     event->accept();
 }
 
-int BlackJack::handScore(Hand *hand){
-    int score = 0;
-    bool ace = false;
-    QList<Card*> cards = hand->findChildren<Card*>();
-    for(int i = 0; i < cards.length(); i++){
-        score += cards.at(i)->value();
-        if(cards.at(i)->isAce())
-            ace = true;
-    }
-    if(ace && (score + 10) <= 21)
-            score += 10;
-    return score;
+void BlackJack::drawCard(Card *card, QString name){
+    QPixmap pix(QString(":/images/%1.png").arg(name));
+    card->label()->setPixmap(pix);
 }
-

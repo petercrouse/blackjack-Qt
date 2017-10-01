@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>523</width>
-    <height>647</height>
+    <height>754</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -21,8 +21,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>444</width>
-    <height>500</height>
+    <width>523</width>
+    <height>647</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -31,10 +31,22 @@
   <property name="autoFillBackground">
    <bool>true</bool>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#centralWidget &gt; QLabel {
+	color: white;
+}
+
+#centralWidget{
+	background-image: url(:/images/background.jpg)
+}
+
+QMessageBox QLabel{
+	color: black;
+}</string>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <property name="styleSheet">
-    <string notr="true">background-image:url(:/images/background.jpg);
-background-position: center;</string>
+    <string notr="true"/>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
@@ -55,7 +67,7 @@ background-position: center;</string>
          </font>
         </property>
         <property name="styleSheet">
-         <string notr="true">color: white;</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>Cards left: </string>
@@ -88,10 +100,7 @@ background-position: center;</string>
        <bool>false</bool>
       </property>
       <property name="styleSheet">
-       <string notr="true">color: white;
-margin-top: 20px;
-
-</string>
+       <string notr="true"/>
       </property>
       <property name="text">
        <string>0:0</string>
@@ -121,10 +130,7 @@ margin-top: 20px;
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true">color: white;
-background-color: transparent;
-text-align: center;
-</string>
+           <string notr="true"/>
           </property>
           <property name="text">
            <string>Dealer</string>
@@ -150,8 +156,7 @@ text-align: center;
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true">color: white;
-background-color: transparent;</string>
+           <string notr="true"/>
           </property>
           <property name="text">
            <string/>
@@ -194,8 +199,7 @@ background-color: transparent;</string>
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true">color: white;
-background-color: transparent;</string>
+           <string notr="true"/>
           </property>
           <property name="text">
            <string>Player</string>
@@ -221,8 +225,7 @@ background-color: transparent;</string>
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true">color: white;
-background-color: transparent;</string>
+           <string notr="true"/>
           </property>
           <property name="text">
            <string/>
@@ -268,8 +271,8 @@ background-color: transparent;</string>
     <addaction name="action_Deal_Hand"/>
     <addaction name="action_Hit_ME"/>
     <addaction name="action_Stay"/>
-    <addaction name="action_Quit"/>
     <addaction name="action_Shuffle_Deck"/>
+    <addaction name="action_Quit"/>
    </widget>
    <addaction name="menuGame"/>
   </widget>
