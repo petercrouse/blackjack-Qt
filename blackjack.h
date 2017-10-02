@@ -18,7 +18,10 @@ public:
     explicit BlackJack(QWidget *parent = 0);
     ~BlackJack();
     void loadSettings();   
-    void deal();    
+    void deal();
+protected:
+    virtual void readSettings();
+    virtual void writeSettings();
 private slots:
     void actionEvent(QAction *event);
     void closeEvent(QCloseEvent *event);    

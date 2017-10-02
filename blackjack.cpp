@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QToolBar>
 #include <QMessageBox>
+#include <QSettings>
 
 BlackJack::BlackJack(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::BlackJack),
@@ -34,6 +35,8 @@ BlackJack::BlackJack(QWidget *parent) :
 
     ui->cardPlayerLayout->addWidget(playerView);
     ui->cardDealerLayout->addWidget(dealerView);
+
+    readSettings();
 
     QObject::connect(actionGroup, SIGNAL(triggered(QAction*)), this, SLOT(actionEvent(QAction*)));
 }
@@ -164,14 +167,34 @@ void BlackJack::actionEvent(QAction *event){
     }
 
     if(name == "action_Quit")
-        QApplication::exit();
+
+        QApplication::closeAllWindows();
 }
 
 void BlackJack::closeEvent(QCloseEvent *event){
+    writeSettings();
     event->accept();
 }
 
 void BlackJack::drawCard(Card *card, QString name){
     QPixmap pix(QString(":/images/%1.png").arg(name));
     card->label()->setPixmap(pix);
+}
+
+void BlackJack::writeSettings() {
+    /* Save postion/size of main window */
+    QSettings settings;
+    settings.setValue("pos", pos());
+    settings.setValue("size", size());
+    settings.setValue("state", saveState());
+}
+
+void BlackJack::readSettings() {
+    QSettings settings;
+    QPoint pos = settings.value("pos", QPoint(200, 200)).toPoint();
+    QSize size = settings.value("size", QSize(400, 400)).toSize();
+    QByteArray state = settings.value("state", QByteArray()).toByteArray();
+    restoreState(state);
+    resize(size);
+    move(pos);
 }
