@@ -30,6 +30,7 @@ BlackJack::BlackJack(QWidget *parent) :
     ui->action_Deal_Hand->setEnabled(false);
 
     QToolBar* toolbar = new QToolBar("Choice ToolBar", this);
+    toolbar->setObjectName("choiceToolbar");
     toolbar->addActions(actionGroup->actions());
     this->addToolBar(Qt::RightToolBarArea, toolbar);
 
